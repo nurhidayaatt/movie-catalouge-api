@@ -1,0 +1,72 @@
+<resources>
+    <string name="app_name">Katalog Film</string>
+    <string name="title_movie">Film</string>
+    <string name="title_tv_show">Acara TV</string>
+    <string name="favorite">Favorit</string>
+    <string name="detail">Detail</string>
+    <string name="setting">Pengaturan</string>
+    <string name="change_language">Ubah Bahasa</string>
+    <string name="photo">Foto</string>
+    <string name="empty_string">-</string>
+    <string name="image_description">Gambar</string>
+    <string name="format_url">%1$s%2$s</string>
+    <string name="format_content_description">%1$s %2$s</string>
+    <string name="error">Error</string>
+    <string name="try_again">Coba Lagi</string>
+    <string name="favorite_deleted">Favorite Dihapus</string>
+    <string name="favorite_added">Favorite Ditambahkan</string>
+    <string name="button_image_favorite">gambar tombol favorite</string>
+    <string name="search_movies">Cari Film</string>
+    <string name="search_tv_shows">Cari Acara TV</string>
+    <string name="search_movies_favorite">Cari Film Favorit</string>
+    <string name="search_tv_shows_favorite">Cari Acara TV Favorit</string>
+    <string name="data_null">Data Tidak Ditemukan</string>
+    <string name="search">Cari disini</string>
+
+    <string name="poster">foto film</string>
+    <string name="title">A Star Is Born</string>
+    <string name="release_date">October 5, 2018</string>
+    <string name="vote_average">7.0</string>
+    <string name="vote_count">1000</string>
+    <string name="story_line">Sinopsis</string>
+    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Urna condimentum mattis pellentesque id nibh tortor id
+        aliquet. In nisl nisi scelerisque eu ultrices vitae auctor eu augue. Dictum at tempor commodo ullamcorper a lacus vestibulum sed arcu. Tincidunt vitae semper quis lectus nulla at volutpat diam.
+        Odio tempor orci dapibus ultrices in iaculis nunc sed. Ultrices vitae auctor eu augue ut lectus. Orci sagittis eu volutpat odio facilisis mauris. Vitae congue mauris rhoncus aenean vel elit scelerisque
+        mauris pellentesque. Enim ut sem viverra aliquet eget sit amet. Vel quam elementum pulvinar etiam non quam lacus suspendisse faucibus. Ultrices tincidunt arcu non sodales neque sodales ut etiam.
+        Curabitur vitae nunc sed velit dignissim sodales ut. Magna sit amet purus gravida quis. Vitae justo eget magna fermentum iaculis eu non diam. Netus et malesuada fames ac turpis egestas sed tempus urna.
+        Sagittis orci a scelerisque purus semper eget duis at tellus. Tellus id interdum velit laoreet id donec. In eu mi bibendum neque egestas congue quisque. Vitae sapien pellentesque habitant morbitristique.
+        Erat nam at lectus urna duis convallis tellus id. Cursus vitae congue mauris rhoncus aenean vel elit scelerisque. Bibendum ut tristique et egestas quis ipsum suspendisse ultrices. Sem viverra
+        aliquet eget sit amet. Nisl nunc mi ipsum faucibus. Dignissim suspendisse in est ante in nibh mauris cursus. Maecenas accumsan lacus vel facilisis volutpat est velit egestas dui. Integer feugiat
+        scelerisque varius morbi enim nunc faucibus. Leo a diam sollicitudin tempor id eu nisl nunc mi. Eu consequat ac felis donec et odio pellentesque diam volutpat. Scelerisque mauris pellentesque pulvinar
+        pellentesque habitant morbi. Et ligula ullamcorper malesuada proin libero nunc. Adipiscing enim eu turpis egestas pretium aenean pharetra magna ac. Netus et malesuada fames ac turpis. Nunc sed id semper
+        risus in hendrerit gravida rutrum. Mattis molestie a iaculis at. Nec nam aliquam sem et. Sed vulputate mi sit amet mauris commodo quis imperdiet massa. Ut faucibus pulvinar elementum integer enim neque
+        volutpat ac. Turpis tincidunt id aliquet risus feugiat in ante. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Urna condimentum mattis pellentesque id nibh tortor id
+        aliquet. In nisl nisi scelerisque eu ultrices vitae auctor eu augue. Dictum at tempor commodo ullamcorper a lacus vestibulum sed arcu. Tincidunt vitae semper quis lectus nulla at volutpat diam.
+        Odio tempor orci dapibus ultrices in iaculis nunc sed. Ultrices vitae auctor eu augue ut lectus. Orci sagittis eu volutpat odio facilisis mauris. Vitae congue mauris rhoncus aenean vel elit scelerisque
+        mauris pellentesque. Enim ut sem viverra aliquet eget sit amet. Vel quam elementum pulvinar etiam non quam lacus suspendisse faucibus. Ultrices tincidunt arcu non sodales neque sodales ut etiam.
+        Curabitur vitae nunc sed velit dignissim sodales ut. Magna sit amet purus gravida quis. Vitae justo eget magna fermentum iaculis eu non diam. Netus et malesuada fames ac turpis egestas sed tempus urna.
+        Sagittis orci a scelerisque purus semper eget duis at tellus. Tellus id interdum velit laoreet id donec. In eu mi bibendum neque egestas congue quisque. Vitae sapien pellentesque habitant morbitristique.
+        Erat nam at lectus urna duis convallis tellus id. Cursus vitae congue mauris rhoncus aenean vel elit scelerisque. Bibendum ut tristique et egestas quis ipsum suspendisse ultrices. Sem viverra
+        aliquet eget sit amet. Nisl nunc mi ipsum faucibus. Dignissim suspendisse in est ante in nibh mauris cursus. Maecenas accumsan lacus vel facilisis volutpat est velit egestas dui. Integer feugiat
+        scelerisque varius morbi enim nunc faucibus. Leo a diam sollicitudin tempor id eu nisl nunc mi. Eu consequat ac felis donec et odio pellentesque diam volutpat. Scelerisque mauris pellentesque pulvinar
+        pellentesque habitant morbi. Et ligula ullamcorper malesuada proin libero nunc. Adipiscing enim eu turpis egestas pretium aenean pharetra magna ac. Netus et malesuada fames ac turpis. Nunc sed id semper
+        risus in hendrerit gravida rutrum. Mattis molestie a iaculis at. Nec nam aliquam sem et. Sed vulputate mi sit amet mauris commodo quis imperdiet massa. Ut faucibus pulvinar elementum integer enim neque
+        volutpat ac. Turpis tincidunt id aliquet risus feugiat in ante.</string>
+
+    <string name="appwidget_text">Favorit</string>
+    <string name="empty_text">TIDAK ADA DATA</string>
+    <string name="language">Bahasa</string>
+    <string name="notification">Notifikasi</string>
+    <string name="release">Rilis Notifikasi</string>
+    <string name="reminder">Pengingat</string>
+    <string name="release_summary">Notifikasi untuk film dan acara tv yang rilis setiap hari</string>
+    <string name="reminder_summary">Mengingatkan anda untuk membuka aplikasi ini lagi</string>
+
+    <string name="key_language">language</string>
+    <string name="key_release">release</string>
+    <string name="key_reminder">remainder</string>
+
+    <string name="notification_setup">Notifikasi Dinyalakan</string>
+    <string name="notification_off">Notifikasi Dimatikan</string>
+    <string name="reminder_message">Cek Film dan Acara Tv Hari Ini</string>
+</resources>
