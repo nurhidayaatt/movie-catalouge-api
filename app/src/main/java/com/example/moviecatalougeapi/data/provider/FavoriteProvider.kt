@@ -12,8 +12,8 @@ import com.example.moviecatalougeapi.data.database.movie.MovieFavoriteDatabase
 class FavoriteProvider: ContentProvider() {
 
     companion object{
-        private const val AUTHORITY = "${BuildConfig.APPLICATION_ID}.provider"
-        private const val TABLE_NAME = "movies"
+        private const val AUTHORITY = "com.example.moviecatalougeapi.data.provider"
+        private const val TABLE_NAME = "movie_favorite"
         private const val MOVIE = 1
         private const val MOVIE_ID = 2
 

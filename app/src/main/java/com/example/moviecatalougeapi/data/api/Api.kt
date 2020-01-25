@@ -10,7 +10,6 @@ import retrofit2.http.Query
 const val BASE_URL = "https://api.themoviedb.org/3/"
 
 interface Api {
-
     @GET("discover/movie")
     suspend fun getMovie(@Query("api_key") key: String, @Query("language") language: String): MovieList
 

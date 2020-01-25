@@ -3,6 +3,8 @@
     package="com.example.favoriteapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <permission android:name="com.example.moviecatalougeapi.READ_DATABASE" android:protectionLevel="normal"/>
+    <permission android:name="com.example.moviecatalougeapi.WRITE_DATABASE" android:protectionLevel="normal"/>
 
     <application
         android:allowBackup="true"

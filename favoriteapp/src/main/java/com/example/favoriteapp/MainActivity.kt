@@ -7,14 +7,13 @@ import android.os.Bundle
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.CursorLoader
 import androidx.loader.content.Loader
-import com.example.favoriteapp.model.ResultMovie
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor> {
 
     companion object {
         private const val AUTHORITY = "com.example.moviecatalougeapi.data.provider"
-        private const val BASE_PATH = "movies"
+        private const val BASE_PATH = "movie_favorite"
     }
 
     private val movieData = mutableListOf<ResultMovie>()
@@ -30,7 +29,7 @@ class MainActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor> 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        supportLoaderManager.initLoader(100, null, this)
+        supportLoaderManager.initLoader(1, null, this)
     }
 
     override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
@@ -39,16 +38,17 @@ class MainActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor> 
 
     override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor?) {
         data?.let{
-            tes.text = it.toString()
+            val movies = CursorHelper.convertToListFavorite(data)
+            if(movies.isEmpty()) tes.text = movies.toString()
         }
     }
 
     override fun onLoaderReset(loader: Loader<Cursor>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        tes.text = movieData.toString()
     }
 
     override fun onResume() {
         super.onResume()
-        supportLoaderManager.restartLoader(100, null, this)
+        supportLoaderManager.restartLoader(1, null, this)
     }
 }
