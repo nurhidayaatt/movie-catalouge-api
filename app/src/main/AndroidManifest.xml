@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.setting.SettingActivity"></activity>
+        <activity android:name=".ui.setting.SettingActivity"/>
 
         <receiver android:name="com.example.moviecatalougeapi.util.widget.FavoriteWidget">
             <intent-filter>
@@ -27,6 +27,7 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/favorite_widget_info" />
         </receiver>
+
         <receiver
             android:name="com.example.moviecatalougeapi.util.notification.AlarmReceiver"
             android:enabled="true"
@@ -56,8 +57,8 @@
             android:authorities="com.example.moviecatalougeapi"
             android:enabled="true"
             android:exported="true"
-            android:readPermission="com.dicoding.mynotesapp.READ_DATABASE"
-            android:writePermission="com.dicoding.mynotesapp.WRITE_DATABASE">
+            android:readPermission="com.example.moviecatalougeapi.READ_DATABASE"
+            android:writePermission="com.example.moviecatalougeapi.WRITE_DATABASE">
         </provider>
 
     </application>
