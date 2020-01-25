@@ -1,6 +1,5 @@
 package com.example.moviecatalougeapi.data.database.movie
 
-import android.provider.ContactsContract.CommonDataKinds.Note
 import androidx.lifecycle.LiveData
 import com.example.moviecatalougeapi.data.model.movie.ResultMovie
 

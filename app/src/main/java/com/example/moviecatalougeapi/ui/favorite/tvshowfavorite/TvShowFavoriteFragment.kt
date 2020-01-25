@@ -43,7 +43,7 @@ class TvShowFavoriteFragment : Fragment() {
         recycler_tv_favorite.adapter = tvAdapter
 
         viewModel.tvs.observe(this, Observer { data ->
-            if (data.size != 0) {
+            if (data.isNotEmpty()) {
                 fab_search.show()
                 error.text = null
                 tvAdapter.setData(data as ArrayList<ResultTv>)

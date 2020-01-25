@@ -36,12 +36,16 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
                 tv_title.text = resultMovie.title
                 tv_release_date.text = resultMovie.releaseDate
 
-                if (resultMovie.overview==null) {
-                    tv_overview.text = resources.getString(R.string.empty_string)
-                }else if (resultMovie.overview!!.trim().isEmpty()) {
-                    tv_overview.text = context.getString(R.string.empty_string)
-                }else {
-                    tv_overview.text = resultMovie.overview
+                when {
+                    resultMovie.overview==null -> {
+                        tv_overview.text = resources.getString(R.string.empty_string)
+                    }
+                    resultMovie.overview!!.trim().isEmpty() -> {
+                        tv_overview.text = context.getString(R.string.empty_string)
+                    }
+                    else -> {
+                        tv_overview.text = resultMovie.overview
+                    }
                 }
             }
         }

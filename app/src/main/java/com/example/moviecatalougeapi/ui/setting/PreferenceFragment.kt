@@ -5,21 +5,19 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreference
 import com.example.moviecatalougeapi.R
 import com.example.moviecatalougeapi.util.notification.AlarmReceiver
-import java.text.SimpleDateFormat
 import java.util.*
 
 
 class PreferenceFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private lateinit var LANGUAGE: String
-    private lateinit var RELEASE: String
-    private lateinit var REMINDER: String
+    private lateinit var language: String
+    private lateinit var release: String
+    private lateinit var reminder: String
 
     private lateinit var languagePreference: Preference
     private lateinit var releasePreference: SwitchPreference
@@ -37,15 +35,14 @@ class PreferenceFragment : PreferenceFragmentCompat(), SharedPreferences.OnShare
     }
 
     private fun init() {
-        LANGUAGE = resources.getString(R.string.key_language)
-        RELEASE = resources.getString(R.string.key_release)
-        REMINDER = resources.getString(R.string.key_reminder)
+        language = resources.getString(R.string.key_language)
+        release = resources.getString(R.string.key_release)
+        reminder = resources.getString(R.string.key_reminder)
 
-        languagePreference = findPreference<Preference>(LANGUAGE) as Preference
-        releasePreference = findPreference<SwitchPreference>(RELEASE) as SwitchPreference
-        reminderPreference = findPreference<SwitchPreference>(REMINDER) as SwitchPreference
+        languagePreference = findPreference<Preference>(language) as Preference
+        releasePreference = findPreference<SwitchPreference>(release) as SwitchPreference
+        reminderPreference = findPreference<SwitchPreference>(reminder) as SwitchPreference
     }
-
 
     private fun setSummary() {
         languagePreference.summary = Locale.getDefault().displayLanguage
@@ -56,8 +53,8 @@ class PreferenceFragment : PreferenceFragmentCompat(), SharedPreferences.OnShare
         }
 
         val sh = preferenceManager.sharedPreferences
-        releasePreference.isChecked = sh.getBoolean(RELEASE, false)
-        reminderPreference.isChecked = sh.getBoolean(REMINDER, false)
+        releasePreference.isChecked = sh.getBoolean(release, false)
+        reminderPreference.isChecked = sh.getBoolean(reminder, false)
     }
 
     override fun onResume() {
@@ -71,18 +68,18 @@ class PreferenceFragment : PreferenceFragmentCompat(), SharedPreferences.OnShare
     }
 
     override fun onSharedPreferenceChanged(p0: SharedPreferences, p1: String) {
-        if (p1 == RELEASE) {
-            releasePreference.isChecked = p0.getBoolean(RELEASE, false)
-            if (p0.getBoolean(RELEASE, false)) {
+        if (p1 == release) {
+            releasePreference.isChecked = p0.getBoolean(release, false)
+            if (p0.getBoolean(release, false)) {
                 alarmReceiver.setRepeatingAlarm(this.requireContext(), AlarmReceiver.TYPE_RELEASE, "08:00")
             }else {
                 alarmReceiver.cancelAlarm(this.requireContext(), AlarmReceiver.TYPE_RELEASE)
             }
         }
 
-        if (p1 == REMINDER) {
-            reminderPreference.isChecked = p0.getBoolean(REMINDER, false)
-            if (p0.getBoolean(REMINDER, false)) {
+        if (p1 == reminder) {
+            reminderPreference.isChecked = p0.getBoolean(reminder, false)
+            if (p0.getBoolean(reminder, false)) {
                 alarmReceiver.setRepeatingAlarm(this.requireContext(), AlarmReceiver.TYPE_REMINDER, "07:00")
             }else {
                 alarmReceiver.cancelAlarm(this.requireContext(), AlarmReceiver.TYPE_REMINDER)

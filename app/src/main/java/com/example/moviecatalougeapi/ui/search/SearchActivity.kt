@@ -11,7 +11,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.moviecatalougeapi.R
@@ -60,16 +59,22 @@ class SearchActivity : AppCompatActivity() {
                 if (p0 != null) {
                     closeKeyboard()
                     showLoading(true)
-                    if (tes.equals(MOVIE)) {
-                        getMovie(p0)
-                    }else if (tes.equals(TV)) {
-                        getTv(p0)
-                    }else if (tes.equals(MOVIE_FAVORITE)) {
-                        getFavoriteMovie(p0)
-                    }else if (tes.equals(TV_FAVORITE)) {
-                        getFavoriteTv(p0)
-                    }else {
-                        finish()
+                    when {
+                        tes.equals(MOVIE) -> {
+                            getMovie(p0)
+                        }
+                        tes.equals(TV) -> {
+                            getTv(p0)
+                        }
+                        tes.equals(MOVIE_FAVORITE) -> {
+                            getFavoriteMovie(p0)
+                        }
+                        tes.equals(TV_FAVORITE) -> {
+                            getFavoriteTv(p0)
+                        }
+                        else -> {
+                            finish()
+                        }
                     }
                 }
                 return true
@@ -84,13 +89,13 @@ class SearchActivity : AppCompatActivity() {
 
     private fun initSpeakToText() {
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
-        if (intent.resolveActivity(this.getPackageManager()) != null) {
-            voice.setVisibility(View.VISIBLE)
+        if (intent.resolveActivity(this.packageManager) != null) {
+            voice.visibility = View.VISIBLE
             voice.setOnClickListener{
                 speakToText()
             }
         } else {
-            voice.setVisibility(View.GONE)
+            voice.visibility = View.GONE
         }
 
     }
@@ -121,7 +126,7 @@ class SearchActivity : AppCompatActivity() {
             )
 
             if (text != null) {
-                input_search.setQuery(text.get(0), true)
+                input_search.setQuery(text[0], true)
                 closeKeyboard()
             }
         }
@@ -227,7 +232,7 @@ class SearchActivity : AppCompatActivity() {
         recycler_search.adapter = movieAdapter
 
         viewModel.favoriteMovie.observe(this, Observer { movieFavorite ->
-            if (movieFavorite.size!=0) {
+            if (movieFavorite.isNotEmpty()) {
                 movieAdapter.setData(movieFavorite as ArrayList<ResultMovie>)
                 error.text = null
                 showLoading(false)
@@ -257,7 +262,7 @@ class SearchActivity : AppCompatActivity() {
         recycler_search.adapter = tvAdapter
 
         viewModel.favoriteTv.observe(this, Observer { tvFavorite ->
-            if (tvFavorite.size!=0) {
+            if (tvFavorite.isNotEmpty()) {
                 tvAdapter.setData(tvFavorite as ArrayList<ResultTv>)
                 error.text = null
                 showLoading(false)

@@ -1,13 +1,10 @@
 package com.example.moviecatalougeapi.ui.search
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.example.moviecatalougeapi.BuildConfig
-import com.example.moviecatalougeapi.R
 import com.example.moviecatalougeapi.data.api.ApiService
 import com.example.moviecatalougeapi.data.database.movie.MovieFavoriteDao
 import com.example.moviecatalougeapi.data.database.movie.MovieFavoriteDatabase
@@ -81,7 +78,7 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
                 if (result.resultMovies.isNotEmpty()) {
                     _listMovie.value = result
 
-                    for (i in 0 until _listMovie.value!!.resultMovies.size) {
+                    for (i in _listMovie.value!!.resultMovies.indices) {
                         val resultMovie =
                             ResultMovie(
                                 _listMovie.value!!.resultMovies[i].id,

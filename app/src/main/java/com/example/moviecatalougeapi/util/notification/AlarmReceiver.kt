@@ -58,9 +58,12 @@ class AlarmReceiver: BroadcastReceiver() {
                         item.add(it.name!!)
                     }
 
-                    showAlarmNotification(context, TYPE_RELEASE, item.toString(), ID_RELEASE)
-                }catch (t: Throwable) {
+                    if (item.size!=0) {
+                        showAlarmNotification(context, TYPE_RELEASE, item.toString(), ID_RELEASE)
+                    }
 
+                }catch (t: Throwable) {
+                    showAlarmNotification(context, TYPE_RELEASE, t.localizedMessage, ID_RELEASE)
                 }
             }
         } else {
@@ -105,15 +108,15 @@ class AlarmReceiver: BroadcastReceiver() {
 
     private fun showAlarmNotification(context: Context, title: String, message: String, notifId: Int) {
 
-        val CHANNEL_ID = "Channel_1"
-        val CHANNEL_NAME = "Notification channel"
+        val channelId = "Channel_1"
+        val channelName = "Notification channel"
 
         val intent = Intent(context, MainActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
 
         val notificationManagerCompat = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-        val builder = NotificationCompat.Builder(context, CHANNEL_ID)
+        val builder = NotificationCompat.Builder(context, channelId)
             .setSmallIcon(R.drawable.ic_favorite_border_black_24dp)
             .setContentIntent(pendingIntent)
             .setContentTitle(title)
@@ -126,13 +129,13 @@ class AlarmReceiver: BroadcastReceiver() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
-            val channel = NotificationChannel(CHANNEL_ID,
-                CHANNEL_NAME,
+            val channel = NotificationChannel(channelId,
+                channelName,
                 NotificationManager.IMPORTANCE_DEFAULT)
 
             channel.enableVibration(true)
             channel.vibrationPattern = longArrayOf(1000, 1000, 1000, 1000, 1000)
-            builder.setChannelId(CHANNEL_ID)
+            builder.setChannelId(channelId)
             notificationManagerCompat.createNotificationChannel(channel)
         }
 

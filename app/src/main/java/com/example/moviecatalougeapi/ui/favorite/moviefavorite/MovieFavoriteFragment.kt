@@ -43,7 +43,7 @@ class MovieFavoriteFragment : Fragment() {
         recycler_movie_favorite.adapter = movieAdapter
 
         viewModel.movies.observe(this, Observer { data ->
-            if (data.size != 0) {
+            if (data.isNotEmpty()) {
                 fab_search.show()
                 error.text = null
                 movieAdapter.setData(data as ArrayList<ResultMovie>)

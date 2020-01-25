@@ -70,13 +70,18 @@ class DetailActivity : AppCompatActivity() {
         vote_average.text = movie.voteAverage.toString()
         vote_count.text = movie.voteCount.toString()
 
-        if (movie.overview==null) {
-            tv_overview.text = getString(R.string.empty_string)
-        }else if (movie.overview!!.trim().isEmpty()) {
-            tv_overview.text = getString(R.string.empty_string)
-        } else {
-            tv_overview.text = movie.overview
+        when {
+            movie.overview==null -> {
+                tv_overview.text = getString(R.string.empty_string)
+            }
+            movie.overview!!.trim().isEmpty() -> {
+                tv_overview.text = getString(R.string.empty_string)
+            }
+            else -> {
+                tv_overview.text = movie.overview
+            }
         }
+
         viewModel.movieId.observe(this, Observer { movieid ->
             if (movieid==movie.id) {
                 favorite.setImageResource(R.drawable.ic_favorite_pink_24dp)
@@ -113,12 +118,16 @@ class DetailActivity : AppCompatActivity() {
         vote_average.text = tv.voteAverage.toString()
         vote_count.text = tv.voteCount.toString()
 
-        if (tv.overview==null) {
-            tv_overview.text = getString(R.string.empty_string)
-        }else if (tv.overview!!.trim().isEmpty()) {
-            tv_overview.text = getString(R.string.empty_string)
-        } else {
-            tv_overview.text = tv.overview
+        when {
+            tv.overview==null -> {
+                tv_overview.text = getString(R.string.empty_string)
+            }
+            tv.overview!!.trim().isEmpty() -> {
+                tv_overview.text = getString(R.string.empty_string)
+            }
+            else -> {
+                tv_overview.text = tv.overview
+            }
         }
 
         viewModel.tvId.observe(this, Observer { tvid ->
