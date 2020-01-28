@@ -6,60 +6,75 @@ import android.content.ContentValues
 import android.content.UriMatcher
 import android.database.Cursor
 import android.net.Uri
-import com.example.moviecatalougeapi.BuildConfig
 import com.example.moviecatalougeapi.data.database.movie.MovieFavoriteDatabase
+import com.example.moviecatalougeapi.data.database.tv.TvFavoriteDatabase
 
 class FavoriteProvider: ContentProvider() {
 
     companion object{
-        private const val AUTHORITY = "com.example.moviecatalougeapi.data.provider"
-        private const val TABLE_NAME = "movie_favorite"
+        private const val AUTHORITY = "com.example.moviecatalougeapi"
+        private const val TABLE_MOVIE = "movie_favorite"
+        private const val TABLE_TV = "tv_favorite"
         private const val MOVIE = 1
         private const val MOVIE_ID = 2
+        private const val TV = 3
+        private const val TV_ID = 4
 
         private val uriMatcher = UriMatcher(UriMatcher.NO_MATCH)
 
         init {
-            uriMatcher.addURI(AUTHORITY, TABLE_NAME, MOVIE)
-            uriMatcher.addURI(AUTHORITY, "$TABLE_NAME/#", MOVIE_ID)
+            uriMatcher.addURI(AUTHORITY, TABLE_MOVIE, MOVIE)
+            uriMatcher.addURI(AUTHORITY, "$TABLE_MOVIE/#", MOVIE_ID)
+            uriMatcher.addURI(AUTHORITY, TABLE_TV, TV)
+            uriMatcher.addURI(AUTHORITY, "$TABLE_TV/#", TV_ID)
         }
 
     }
 
     private lateinit var dbMovie : MovieFavoriteDatabase
+    private lateinit var dbTv : TvFavoriteDatabase
 
     override fun insert(p0: Uri, p1: ContentValues?): Uri? {
         return null
     }
 
-    override fun query(
-        p0: Uri,
-        p1: Array<out String>?,
-        p2: String?,
-        p3: Array<out String>?,
-        p4: String?
-    ): Cursor? {
+    override fun query(p0: Uri, p1: Array<out String>?, p2: String?, p3: Array<out String>?, p4: String?): Cursor? {
         if (context == null){
             return null
         }
         val cursor: Cursor?
         val favoriteMovies = dbMovie.movieFavoriteDao()
-        val code = uriMatcher.match(p0)
-        if (code in MOVIE..MOVIE_ID){
-            cursor = when(uriMatcher.match(p0)){
-                MOVIE -> favoriteMovies.getAllFavoriteCursor()
-                MOVIE_ID -> favoriteMovies.getFavoriteMovieCursor(ContentUris.parseId(p0).toInt())
-                else -> {
-                    null
+        val favoriteTvs = dbTv.tvFavoriteDao()
+        when (uriMatcher.match(p0)) {
+            in MOVIE..MOVIE_ID -> {
+                cursor = when(uriMatcher.match(p0)){
+                    MOVIE -> favoriteMovies.getAllFavoriteCursor()
+                    MOVIE_ID -> favoriteMovies.getFavoriteMovieCursor(ContentUris.parseId(p0).toInt())
+                    else -> {
+                        null
+                    }
                 }
+                cursor?.setNotificationUri(context?.contentResolver, p0)
+                return cursor
             }
-            //cursor?.setNotificationUri(context?.contentResolver, p0)
-            return cursor
-        }else throw IllegalArgumentException("Unknown Uri")
+            in TV..TV_ID -> {
+                cursor = when(uriMatcher.match(p0)){
+                    TV -> favoriteTvs.getAllFavoriteCursor()
+                    TV_ID -> favoriteTvs.getFavoriteMovieCursor(ContentUris.parseId(p0).toInt())
+                    else -> {
+                        null
+                    }
+                }
+                cursor?.setNotificationUri(context?.contentResolver, p0)
+                return cursor
+            }
+            else -> throw IllegalArgumentException("Unknown Uri")
+        }
     }
 
     override fun onCreate(): Boolean {
         dbMovie = MovieFavoriteDatabase.getInstance(context!!)
+        dbTv = TvFavoriteDatabase.getInstance(context!!)
         return true
     }
 
@@ -73,8 +88,10 @@ class FavoriteProvider: ContentProvider() {
 
     override fun getType(p0: Uri): String? {
         return when(uriMatcher.match(p0)){
-            MOVIE -> "vnd.android.cursor.dir/$AUTHORITY.$TABLE_NAME"
-            MOVIE_ID -> "vnd.android.cursor.item/$AUTHORITY.$TABLE_NAME"
+            MOVIE -> "vnd.android.cursor.dir/$AUTHORITY.$TABLE_MOVIE"
+            MOVIE_ID -> "vnd.android.cursor.item/$AUTHORITY.$TABLE_MOVIE"
+            TV -> "vnd.android.cursor.dir/$AUTHORITY.$TABLE_TV"
+            TV_ID -> "vnd.android.cursor.item/$AUTHORITY.$TABLE_TV"
             else -> throw IllegalArgumentException("Unknown Uri $p0")
         }
     }

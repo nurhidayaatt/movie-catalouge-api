@@ -3,7 +3,6 @@
     <string name="title_movie">Film</string>
     <string name="title_tv_show">Acara TV</string>
     <string name="favorite">Favorit</string>
-    <string name="detail">Detail</string>
     <string name="setting">Pengaturan</string>
     <string name="change_language">Ubah Bahasa</string>
     <string name="photo">Foto</string>
@@ -69,4 +68,6 @@
     <string name="notification_setup">Notifikasi Dinyalakan</string>
     <string name="notification_off">Notifikasi Dimatikan</string>
     <string name="reminder_message">Cek Film dan Acara Tv Hari Ini</string>
+    <string name="voice_input">masukan suara</string>
+    <string name="widget_image">gambar widget</string>
 </resources>

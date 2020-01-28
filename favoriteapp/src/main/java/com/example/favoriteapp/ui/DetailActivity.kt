@@ -1,18 +1,11 @@
-package com.example.moviecatalougeapi.ui.detail
+package com.example.favoriteapp.ui
 
-import android.content.Context
-import android.content.Intent
-import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import android.os.Bundle
 import com.bumptech.glide.Glide
-import com.example.moviecatalougeapi.R
-import com.example.moviecatalougeapi.data.model.movie.ResultMovie
-import com.example.moviecatalougeapi.data.model.tv.ResultTv
-import com.example.moviecatalougeapi.util.widget.FavoriteWidget
-import com.google.android.material.snackbar.Snackbar
+import com.example.favoriteapp.R
+import com.example.favoriteapp.model.ResultMovie
+import com.example.favoriteapp.model.ResultTv
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.layout_detail.*
 
@@ -25,17 +18,12 @@ class DetailActivity : AppCompatActivity() {
         const val POSTER_BASE_URL = "https://image.tmdb.org/t/p/w154"
     }
 
-    private lateinit var viewModel: DetailViewModel
     private var movie: ResultMovie? = null
     private var tv: ResultTv? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
-
-        showLoading(true)
-
-        viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
 
         setSupportActionBar(toolbar_detail)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -45,15 +33,10 @@ class DetailActivity : AppCompatActivity() {
 
         when {
             movie != null -> {
-                viewModel.getFavoriteMovieId(movie!!.id)
                 setMovie(movie!!)
             }
             tv != null -> {
-                viewModel.getFavoriteTvId(tv!!.id)
                 setTv(tv!!)
-            }
-            else -> {
-                showLoading(false)
             }
         }
     }
@@ -81,29 +64,6 @@ class DetailActivity : AppCompatActivity() {
                 tv_overview.text = movie.overview
             }
         }
-
-        viewModel.movieId.observe(this, Observer { movieid ->
-            if (movieid==movie.id) {
-                favorite.setImageResource(R.drawable.ic_favorite_pink_24dp)
-                favorite.setOnClickListener {
-                    showLoading(true)
-                    viewModel.deleteFavorite(movie)
-                    snackbar(getString(R.string.favorite_deleted))
-                    viewModel.getFavoriteMovieId(movie.id)
-                    sendUpdateFavoriteList(this)
-                }
-            }else {
-                favorite.setImageResource(R.drawable.ic_favorite_border_black_24dp)
-                favorite.setOnClickListener {
-                    showLoading(true)
-                    viewModel.addFavorite(movie)
-                    snackbar(getString(R.string.favorite_added))
-                    viewModel.getFavoriteMovieId(movie.id)
-                    sendUpdateFavoriteList(this)
-                }
-            }
-            showLoading(false)
-        })
     }
 
     private fun setTv(tv: ResultTv) {
@@ -129,51 +89,10 @@ class DetailActivity : AppCompatActivity() {
                 tv_overview.text = tv.overview
             }
         }
-
-        viewModel.tvId.observe(this, Observer { tvid ->
-            if (tvid==tv.id) {
-                favorite.setImageResource(R.drawable.ic_favorite_pink_24dp)
-                favorite.setOnClickListener{
-                    showLoading(true)
-                    viewModel.deleteFavorite(tv)
-                    snackbar(getString(R.string.favorite_deleted))
-                    viewModel.getFavoriteTvId(tv.id)
-                    sendUpdateFavoriteList(this)
-                }
-            }else {
-                favorite.setImageResource(R.drawable.ic_favorite_border_black_24dp)
-                favorite.setOnClickListener{
-                    showLoading(true)
-                    viewModel.addFavorite(tv)
-                    snackbar(getString(R.string.favorite_added))
-                    viewModel.getFavoriteTvId(tv.id)
-                    sendUpdateFavoriteList(this)
-                }
-            }
-            showLoading(false)
-        })
-    }
-
-    private fun sendUpdateFavoriteList(context: Context) {
-        val intent = Intent(context, FavoriteWidget::class.java)
-        intent.action = FavoriteWidget.UPDATE_WIDGET
-        context.sendBroadcast(intent)
-    }
-
-    private fun snackbar(string: String) {
-        Snackbar.make(coordinator, string, Snackbar.LENGTH_LONG).show()
     }
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
-    }
-
-    private fun showLoading(state: Boolean) {
-        if (state) {
-            progressBar.visibility = View.VISIBLE
-        } else {
-            progressBar.visibility = View.GONE
-        }
     }
 }

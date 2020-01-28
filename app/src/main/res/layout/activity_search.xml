@@ -51,7 +51,7 @@
                     android:layout_gravity="end|center_vertical"
                     android:layout_alignParentEnd="true"
                     android:src="@drawable/ic_keyboard_voice_grey_24dp"
-                    android:contentDescription="TODO" />
+                    android:contentDescription="@string/voice_input" />
 
             </androidx.cardview.widget.CardView>
 

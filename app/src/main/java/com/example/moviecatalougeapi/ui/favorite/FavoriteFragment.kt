@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.moviecatalougeapi.R
-import com.example.moviecatalougeapi.util.SectionsPagerAdapter
+import com.example.moviecatalougeapi.data.adapter.SectionsPagerAdapter
 import kotlinx.android.synthetic.main.favorite_fragment.*
 
 class FavoriteFragment : Fragment() {
@@ -18,7 +18,12 @@ class FavoriteFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val sectionsPagerAdapter : SectionsPagerAdapter? = context?.let { SectionsPagerAdapter(it, childFragmentManager) }
+        val sectionsPagerAdapter : SectionsPagerAdapter? = context?.let {
+            SectionsPagerAdapter(
+                it,
+                childFragmentManager
+            )
+        }
         view_pager.adapter = sectionsPagerAdapter
         tabs.setupWithViewPager(view_pager)
     }

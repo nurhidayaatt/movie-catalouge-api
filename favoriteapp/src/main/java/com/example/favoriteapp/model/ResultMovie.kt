@@ -1,4 +1,4 @@
-package com.example.favoriteapp
+package com.example.favoriteapp.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

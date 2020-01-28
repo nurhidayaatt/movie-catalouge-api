@@ -1,4 +1,4 @@
-package com.example.moviecatalougeapi.util
+package com.example.favoriteapp.adapter
 
 import android.content.Context
 import androidx.annotation.Nullable
@@ -6,9 +6,9 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.example.moviecatalougeapi.R
-import com.example.moviecatalougeapi.ui.favorite.moviefavorite.MovieFavoriteFragment
-import com.example.moviecatalougeapi.ui.favorite.tvshowfavorite.TvShowFavoriteFragment
+import com.example.favoriteapp.R
+import com.example.favoriteapp.ui.MovieFavoriteFragment
+import com.example.favoriteapp.ui.TvShowFavoriteFragment
 
 class SectionsPagerAdapter(private val mContext: Context, fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 

@@ -3,7 +3,6 @@
     <string name="title_movie">Movies</string>
     <string name="title_tv_show">TV Shows</string>
     <string name="favorite">Favorites</string>
-    <string name="detail">Detail</string>
     <string name="setting">Setting</string>
     <string name="change_language">Change Language</string>
     <string name="photo">Photo</string>
@@ -69,4 +68,6 @@
     <string name="notification_setup">Notification Set Up</string>
     <string name="notification_off">Notification Off</string>
     <string name="reminder_message">Check Movie and Tv Show Today</string>
+    <string name="voice_input">voice input</string>
+    <string name="widget_image">widget image</string>
 </resources>

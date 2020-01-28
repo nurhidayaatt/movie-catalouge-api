@@ -5,8 +5,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <permission android:name="com.example.moviecatalougeapi.READ_DATABASE" android:protectionLevel="normal"/>
-    <permission android:name="com.example.moviecatalougeapi.WRITE_DATABASE" android:protectionLevel="normal"/>
 
     <application
         android:allowBackup="true"
@@ -55,10 +53,7 @@
         <provider
             android:name=".data.provider.FavoriteProvider"
             android:authorities="com.example.moviecatalougeapi"
-            android:enabled="true"
-            android:exported="true"
-            android:readPermission="com.example.moviecatalougeapi.READ_DATABASE"
-            android:writePermission="com.example.moviecatalougeapi.WRITE_DATABASE">
+            android:exported="true">
         </provider>
 
     </application>

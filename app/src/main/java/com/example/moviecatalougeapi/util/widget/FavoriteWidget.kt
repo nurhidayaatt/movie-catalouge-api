@@ -11,9 +11,7 @@ import android.widget.Toast
 import androidx.core.net.toUri
 import com.example.moviecatalougeapi.R
 
-/**
- * Implementation of App Widget functionality.
- */
+
 class FavoriteWidget : AppWidgetProvider() {
 
     companion object {

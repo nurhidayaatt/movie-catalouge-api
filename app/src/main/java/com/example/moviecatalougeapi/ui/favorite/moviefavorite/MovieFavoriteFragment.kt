@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.moviecatalougeapi.R
 import com.example.moviecatalougeapi.data.adapter.MovieAdapter
@@ -34,11 +34,9 @@ class MovieFavoriteFragment : Fragment() {
             startActivity(intent)
         }
 
-        viewModel = ViewModelProviders.of(this).get(MovieFavoriteViewModel::class.java)
-
+        viewModel = ViewModelProvider(this).get(MovieFavoriteViewModel::class.java)
         movieAdapter = MovieAdapter()
         movieAdapter.notifyDataSetChanged()
-
         recycler_movie_favorite.layoutManager = LinearLayoutManager(activity)
         recycler_movie_favorite.adapter = movieAdapter
 
@@ -60,7 +58,6 @@ class MovieFavoriteFragment : Fragment() {
                 intent.putExtra(DetailActivity.EXTRA_MOVIE, data)
                 startActivity(intent)
             }
-
         })
     }
 

@@ -60,9 +60,11 @@ class AlarmReceiver: BroadcastReceiver() {
 
                     if (item.size!=0) {
                         showAlarmNotification(context, TYPE_RELEASE, item.toString(), ID_RELEASE)
+                    }else {
+                        showAlarmNotification(context, TYPE_RELEASE, context.getString(R.string.data_null), ID_RELEASE)
                     }
-
                 }catch (t: Throwable) {
+                    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
                     showAlarmNotification(context, TYPE_RELEASE, t.localizedMessage, ID_RELEASE)
                 }
             }
@@ -143,6 +145,7 @@ class AlarmReceiver: BroadcastReceiver() {
         notificationManagerCompat.notify(notifId, notification)
     }
 
+    @Suppress("SameParameterValue")
     private fun isDateInvalid(date: String, format: String): Boolean {
         return try {
             val df = SimpleDateFormat(format, Locale.getDefault())
