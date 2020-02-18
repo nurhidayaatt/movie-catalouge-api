@@ -28,6 +28,7 @@ internal class StackRemoteViewsFactory(private val context: Context) : RemoteVie
     }
 
     override fun onDataSetChanged() {
+        mWidgetItems.clear()
         mWidgetItems.addAll(movieFavoriteDao.loadFavorite())
         mWidgetItems.addAll(tvFavoriteDao.loadFavorite())
     }

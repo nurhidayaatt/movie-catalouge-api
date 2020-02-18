@@ -33,6 +33,7 @@ class TvShowFragment : Fragment() {
 
         fab_search.setOnClickListener {
             val intent = Intent(activity, SearchActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
             intent.putExtra(SearchActivity.EXTRA, SearchActivity.TV)
             startActivity(intent)
         }
@@ -51,8 +52,6 @@ class TvShowFragment : Fragment() {
 
     private fun showTv() {
         tvAdapter = TvAdapter()
-        tvAdapter.notifyDataSetChanged()
-
         recycler_tv.layoutManager = LinearLayoutManager(activity)
         recycler_tv.adapter = tvAdapter
 
@@ -75,6 +74,7 @@ class TvShowFragment : Fragment() {
         tvAdapter.setOnItemClickCallback(object : TvAdapter.OnItemClickCallback {
             override fun onItemClicked(data: ResultTv) {
                 val intent = Intent(activity, DetailActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
                 intent.putExtra(DetailActivity.EXTRA_TV, data)
                 startActivity(intent)
             }

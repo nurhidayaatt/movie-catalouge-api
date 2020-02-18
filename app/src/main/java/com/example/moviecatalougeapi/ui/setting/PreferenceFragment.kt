@@ -27,9 +27,7 @@ class PreferenceFragment : PreferenceFragmentCompat(), SharedPreferences.OnShare
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.preferences)
-
         alarmReceiver = AlarmReceiver()
-
         init()
         setSummary()
     }

@@ -1,5 +1,7 @@
 package com.example.moviecatalougeapi.ui.detail
 
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -84,8 +86,9 @@ class DetailActivity : AppCompatActivity() {
 
         viewModel.movieId.observe(this, Observer { movieid ->
             if (movieid==movie.id) {
-                favorite.setImageResource(R.drawable.ic_favorite_pink_24dp)
-                favorite.setOnClickListener {
+                add_favorite.visibility = View.INVISIBLE
+                delete_favorite.visibility = View.VISIBLE
+                delete_favorite.setOnClickListener {
                     showLoading(true)
                     viewModel.deleteFavorite(movie)
                     snackbar(getString(R.string.favorite_deleted))
@@ -93,8 +96,9 @@ class DetailActivity : AppCompatActivity() {
                     sendUpdateFavoriteList(this)
                 }
             }else {
-                favorite.setImageResource(R.drawable.ic_favorite_border_black_24dp)
-                favorite.setOnClickListener {
+                delete_favorite.visibility = View.INVISIBLE
+                add_favorite.visibility = View.VISIBLE
+                add_favorite.setOnClickListener {
                     showLoading(true)
                     viewModel.addFavorite(movie)
                     snackbar(getString(R.string.favorite_added))
@@ -132,8 +136,9 @@ class DetailActivity : AppCompatActivity() {
 
         viewModel.tvId.observe(this, Observer { tvid ->
             if (tvid==tv.id) {
-                favorite.setImageResource(R.drawable.ic_favorite_pink_24dp)
-                favorite.setOnClickListener{
+                add_favorite.visibility = View.INVISIBLE
+                delete_favorite.visibility = View.VISIBLE
+                delete_favorite.setOnClickListener{
                     showLoading(true)
                     viewModel.deleteFavorite(tv)
                     snackbar(getString(R.string.favorite_deleted))
@@ -141,8 +146,9 @@ class DetailActivity : AppCompatActivity() {
                     sendUpdateFavoriteList(this)
                 }
             }else {
-                favorite.setImageResource(R.drawable.ic_favorite_border_black_24dp)
-                favorite.setOnClickListener{
+                delete_favorite.visibility = View.INVISIBLE
+                add_favorite.visibility = View.VISIBLE
+                add_favorite.setOnClickListener{
                     showLoading(true)
                     viewModel.addFavorite(tv)
                     snackbar(getString(R.string.favorite_added))
@@ -157,7 +163,7 @@ class DetailActivity : AppCompatActivity() {
     private fun sendUpdateFavoriteList(context: Context) {
         val intent = Intent(context, FavoriteWidget::class.java)
         intent.action = FavoriteWidget.UPDATE_WIDGET
-        context.sendBroadcast(intent)
+        sendBroadcast(intent)
     }
 
     private fun snackbar(string: String) {

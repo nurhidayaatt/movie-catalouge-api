@@ -24,7 +24,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/iv_poster"
-        app:layout_constraintEnd_toStartOf="@+id/favorite"
+        app:layout_constraintEnd_toStartOf="@+id/add_favorite"
         app:layout_constraintTop_toTopOf="@id/iv_poster"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
@@ -34,13 +34,24 @@
         android:textColor="@android:color/black"/>
 
     <ImageButton
-        android:id="@+id/favorite"
+        android:id="@+id/add_favorite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="@+id/tv_title"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="10dp"
         android:src="@drawable/ic_favorite_border_black_24dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/button_image_favorite" />
+
+    <ImageButton
+        android:id="@+id/delete_favorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/tv_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="10dp"
+        android:src="@drawable/ic_favorite_pink_24dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/button_image_favorite" />
 

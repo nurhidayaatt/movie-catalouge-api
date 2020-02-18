@@ -12,9 +12,8 @@ import android.os.Build
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
-import com.example.moviecatalougeapi.BuildConfig
 import com.example.moviecatalougeapi.R
-import com.example.moviecatalougeapi.data.api.ApiService
+import com.example.moviecatalougeapi.data.api.ApiClient
 import com.example.moviecatalougeapi.data.model.movie.MovieList
 import com.example.moviecatalougeapi.data.model.tv.TvList
 import com.example.moviecatalougeapi.ui.MainActivity
@@ -32,12 +31,14 @@ class AlarmReceiver: BroadcastReceiver() {
         const val TYPE_RELEASE = "Release Movies & Tv Shows Today"
         const val EXTRA_TYPE = "type"
 
-        private const val ID_REMINDER = 100
-        private const val ID_RELEASE = 101
+        private const val ID_REMINDER = 0
+        private const val ID_RELEASE = 1
 
         private const val DATE_FORMAT = "yyyy-MM-dd"
         private const val TIME_FORMAT = "HH:mm"
     }
+
+    private lateinit var language: String
 
     override fun onReceive(context: Context, intent: Intent) {
         val item = ArrayList<String>()
@@ -47,8 +48,13 @@ class AlarmReceiver: BroadcastReceiver() {
             GlobalScope.launch {
                 try {
                     val date = SimpleDateFormat(DATE_FORMAT, Locale.getDefault()).format(Date())
-                    val movies: MovieList = ApiService.retrofitService.releaseMovie(BuildConfig.TMDB_API_KEY, date, date)
-                    val tvs: TvList = ApiService.retrofitService.releaseTv(BuildConfig.TMDB_API_KEY, date, date)
+                    language = if (Locale.getDefault().language.toString() == "in") {
+                        "id"
+                    } else {
+                        "en-US"
+                    }
+                    val movies: MovieList = ApiClient.getClient().releaseMovie(language, date, date)
+                    val tvs: TvList = ApiClient.getClient().releaseTv(language, date, date)
 
                     movies.resultMovies.forEach {
                         item.add(it.title!!)

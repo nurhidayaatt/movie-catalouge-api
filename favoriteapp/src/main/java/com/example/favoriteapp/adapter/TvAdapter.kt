@@ -3,6 +3,8 @@ package com.example.favoriteapp.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.favoriteapp.R
@@ -15,12 +17,29 @@ class TvAdapter : RecyclerView.Adapter<TvAdapter.TvViewHolder>() {
         const val POSTER_BASE_URL = "https://image.tmdb.org/t/p/w154"
     }
 
-    private val mData = ArrayList<ResultTv>()
+    private val diffCallback = object : DiffUtil.ItemCallback<ResultTv>() {
+        override fun areItemsTheSame(oldItem: ResultTv, newItem: ResultTv): Boolean {
+            return oldItem.id == newItem.id
+        }
 
-    fun setData(items: ArrayList<ResultTv>?) {
-        mData.clear()
-        mData.addAll(items!!)
-        notifyDataSetChanged()
+        override fun areContentsTheSame(oldItem: ResultTv, newItem: ResultTv): Boolean {
+            return oldItem == newItem
+        }
+
+    }
+
+    private val differ = AsyncListDiffer(this, diffCallback)
+
+    fun setData(items: List<ResultTv>) {
+        differ.submitList(items)
+    }
+
+    fun setData() {
+        differ.submitList(null)
+    }
+
+    fun getData(position: Int): ResultTv {
+        return differ.currentList[position]
     }
 
     inner class TvViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -51,13 +70,13 @@ class TvAdapter : RecyclerView.Adapter<TvAdapter.TvViewHolder>() {
         return TvViewHolder(mView)
     }
 
-    override fun getItemCount(): Int = mData.size
+    override fun getItemCount(): Int = differ.currentList.size
 
     override fun onBindViewHolder(holder: TvViewHolder, position: Int) {
-        holder.bind(mData[position])
+        holder.bind(differ.currentList[position])
 
         holder.itemView.setOnClickListener{
-            onItemClickCallback.onItemClicked(mData[holder.adapterPosition])
+            onItemClickCallback.onItemClicked(differ.currentList[holder.adapterPosition])
         }
     }
 

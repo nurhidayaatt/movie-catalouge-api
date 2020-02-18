@@ -33,6 +33,7 @@ class MovieFragment : Fragment() {
 
         fab_search.setOnClickListener {
             val intent = Intent(activity, SearchActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
             intent.putExtra(SearchActivity.EXTRA, SearchActivity.MOVIE)
             startActivity(intent)
         }
@@ -51,8 +52,6 @@ class MovieFragment : Fragment() {
 
     private fun showMovie() {
         movieAdapter = MovieAdapter()
-        movieAdapter.notifyDataSetChanged()
-
         recycler_movie.layoutManager = LinearLayoutManager(activity)
         recycler_movie.adapter = movieAdapter
 
@@ -75,6 +74,7 @@ class MovieFragment : Fragment() {
         movieAdapter.setOnItemClickCallback(object : MovieAdapter.OnItemClickCallback {
             override fun onItemClicked(data: ResultMovie) {
                 val intent = Intent(activity, DetailActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
                 intent.putExtra(DetailActivity.EXTRA_MOVIE, data)
                 startActivity(intent)
             }

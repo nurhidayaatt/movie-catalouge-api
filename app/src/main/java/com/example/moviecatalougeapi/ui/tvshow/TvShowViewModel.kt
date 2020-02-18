@@ -3,8 +3,7 @@ package com.example.moviecatalougeapi.ui.tvshow
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.moviecatalougeapi.BuildConfig
-import com.example.moviecatalougeapi.data.api.ApiService
+import com.example.moviecatalougeapi.data.api.ApiClient
 import com.example.moviecatalougeapi.data.model.tv.ResultTv
 import com.example.moviecatalougeapi.data.model.tv.TvList
 import kotlinx.coroutines.CoroutineScope
@@ -30,7 +29,7 @@ class TvShowViewModel : ViewModel() {
 
         scope.launch {
             try {
-                val result: TvList = ApiService.retrofitService.getTV(BuildConfig.TMDB_API_KEY, language)
+                val result: TvList = ApiClient.getClient().getTV(language)
 
                 if (result.results.isNotEmpty()) {
                     _listTv.value = result

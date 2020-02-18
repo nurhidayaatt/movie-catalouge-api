@@ -3,6 +3,8 @@ package com.example.favoriteapp.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.favoriteapp.R
@@ -15,12 +17,29 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
         const val POSTER_BASE_URL = "https://image.tmdb.org/t/p/w154"
     }
 
-    private val mData = ArrayList<ResultMovie>()
+    private val diffCallback = object : DiffUtil.ItemCallback<ResultMovie>() {
+        override fun areItemsTheSame(oldItem: ResultMovie, newItem: ResultMovie): Boolean {
+            return oldItem.id == newItem.id
+        }
 
-    fun setData(items: ArrayList<ResultMovie>?) {
-        mData.clear()
-        mData.addAll(items!!)
-        notifyDataSetChanged()
+        override fun areContentsTheSame(oldItem: ResultMovie, newItem: ResultMovie): Boolean {
+            return oldItem == newItem
+        }
+
+    }
+
+    private val differ = AsyncListDiffer(this, diffCallback)
+
+    fun setData(items: List<ResultMovie>) {
+        differ.submitList(items)
+    }
+
+    fun setData() {
+        differ.submitList(null)
+    }
+
+    fun getData(position: Int): ResultMovie {
+        return differ.currentList[position]
     }
 
     inner class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -51,13 +70,13 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
         return MovieViewHolder(mView)
     }
 
-    override fun getItemCount(): Int = mData.size
+    override fun getItemCount(): Int = differ.currentList.size
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        holder.bind(mData[position])
+        holder.bind(differ.currentList[position])
 
         holder.itemView.setOnClickListener{
-            onItemClickCallback.onItemClicked(mData[holder.adapterPosition])
+            onItemClickCallback.onItemClicked(differ.currentList[holder.adapterPosition])
         }
     }
 

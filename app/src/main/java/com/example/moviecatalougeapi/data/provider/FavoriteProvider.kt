@@ -38,34 +38,34 @@ class FavoriteProvider: ContentProvider() {
         return null
     }
 
-    override fun query(p0: Uri, p1: Array<out String>?, p2: String?, p3: Array<out String>?, p4: String?): Cursor? {
+    override fun query(uri: Uri, strings: Array<out String>?, s: String?, strings1: Array<out String>?, s1: String?): Cursor? {
         if (context == null){
             return null
         }
         val cursor: Cursor?
         val favoriteMovies = dbMovie.movieFavoriteDao()
         val favoriteTvs = dbTv.tvFavoriteDao()
-        when (uriMatcher.match(p0)) {
+        when (uriMatcher.match(uri)) {
             in MOVIE..MOVIE_ID -> {
-                cursor = when(uriMatcher.match(p0)){
+                cursor = when(uriMatcher.match(uri)){
                     MOVIE -> favoriteMovies.getAllFavoriteCursor()
-                    MOVIE_ID -> favoriteMovies.getFavoriteMovieCursor(ContentUris.parseId(p0).toInt())
+                    MOVIE_ID -> favoriteMovies.getFavoriteMovieCursor(ContentUris.parseId(uri).toInt())
                     else -> {
                         null
                     }
                 }
-                cursor?.setNotificationUri(context?.contentResolver, p0)
+                cursor?.setNotificationUri(context?.contentResolver, uri)
                 return cursor
             }
             in TV..TV_ID -> {
-                cursor = when(uriMatcher.match(p0)){
+                cursor = when(uriMatcher.match(uri)){
                     TV -> favoriteTvs.getAllFavoriteCursor()
-                    TV_ID -> favoriteTvs.getFavoriteMovieCursor(ContentUris.parseId(p0).toInt())
+                    TV_ID -> favoriteTvs.getFavoriteMovieCursor(ContentUris.parseId(uri).toInt())
                     else -> {
                         null
                     }
                 }
-                cursor?.setNotificationUri(context?.contentResolver, p0)
+                cursor?.setNotificationUri(context?.contentResolver, uri)
                 return cursor
             }
             else -> throw IllegalArgumentException("Unknown Uri")

@@ -3,29 +3,43 @@ package com.example.moviecatalougeapi.data.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.moviecatalougeapi.R
 import com.example.moviecatalougeapi.data.model.movie.ResultMovie
 import kotlinx.android.synthetic.main.item_layout_list.view.*
 
-class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+class MovieAdapter() : PagedListAdapter<ResultMovie, MovieAdapter.MovieViewHolder>(diffCallback) {
 
     companion object {
         const val POSTER_BASE_URL = "https://image.tmdb.org/t/p/w154"
+
+        private val diffCallback = object : DiffUtil.ItemCallback<ResultMovie>() {
+            override fun areItemsTheSame(oldItem: ResultMovie, newItem: ResultMovie): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: ResultMovie, newItem: ResultMovie): Boolean {
+                return oldItem == newItem
+            }
+        }
     }
 
-    private val mData = ArrayList<ResultMovie>()
+    private val differ = AsyncListDiffer(this, diffCallback)
 
-    fun setData(items: ArrayList<ResultMovie>) {
-        mData.clear()
-        mData.addAll(items)
-        notifyDataSetChanged()
+    fun setData(items: List<ResultMovie>) {
+        differ.submitList(items)
     }
 
     fun setData() {
-        mData.clear()
-        notifyDataSetChanged()
+        differ.submitList(null)
+    }
+
+    fun getData(position: Int): ResultMovie {
+        return differ.currentList[position]
     }
 
     inner class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -56,13 +70,14 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
         return MovieViewHolder(mView)
     }
 
-    override fun getItemCount(): Int = mData.size
+    override fun getItemCount(): Int = differ.currentList.size
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        holder.bind(mData[position])
+        val movie = differ.currentList[position]
+        movie?.let { holder.bind(movie) }
 
         holder.itemView.setOnClickListener{
-            onItemClickCallback.onItemClicked(mData[holder.adapterPosition])
+            onItemClickCallback.onItemClicked(differ.currentList[holder.adapterPosition])
         }
     }
 
@@ -75,4 +90,5 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
     interface OnItemClickCallback {
         fun onItemClicked(data: ResultMovie)
     }
+
 }

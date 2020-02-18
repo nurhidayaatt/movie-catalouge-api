@@ -1,7 +1,9 @@
 package com.example.moviecatalougeapi.ui
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -45,7 +47,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.setting) {
-            startActivity(Intent(this, SettingActivity::class.java))
+            val intent = Intent(this, SettingActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+            startActivity(intent)
         }
         return super.onOptionsItemSelected(item)
     }

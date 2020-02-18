@@ -4,8 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.moviecatalougeapi.BuildConfig
-import com.example.moviecatalougeapi.data.api.ApiService
+import com.example.moviecatalougeapi.data.api.ApiClient
 import com.example.moviecatalougeapi.data.database.movie.MovieFavoriteDao
 import com.example.moviecatalougeapi.data.database.movie.MovieFavoriteDatabase
 import com.example.moviecatalougeapi.data.database.movie.MovieFavoriteRepository
@@ -73,7 +72,7 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
 
         scope.launch {
             try {
-                val result: MovieList = ApiService.retrofitService.searchMovie(BuildConfig.TMDB_API_KEY, language, search)
+                val result: MovieList = ApiClient.getClient().searchMovie(language, search)
 
                 if (result.resultMovies.isNotEmpty()) {
                     _listMovie.value = result
@@ -109,7 +108,7 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
 
         scope.launch {
             try {
-                val result: TvList = ApiService.retrofitService.searchTV(BuildConfig.TMDB_API_KEY, language, search)
+                val result: TvList = ApiClient.getClient().searchTV(language, search)
 
                 if (result.results.isNotEmpty()) {
                     _listTv.value = result

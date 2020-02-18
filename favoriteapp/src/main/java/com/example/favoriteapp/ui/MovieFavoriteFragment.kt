@@ -14,7 +14,6 @@ import androidx.loader.content.CursorLoader
 import androidx.loader.content.Loader
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.favoriteapp.util.CursorHelper.convertToMovieFavorite
-
 import com.example.favoriteapp.R
 import com.example.favoriteapp.model.ResultMovie
 import com.example.favoriteapp.adapter.MovieAdapter
@@ -39,10 +38,8 @@ class MovieFavoriteFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         LoaderManager.getInstance(this).initLoader(1, null, this)
         movieAdapter = MovieAdapter()
-        movieAdapter.notifyDataSetChanged()
         recycler_movie_favorite.layoutManager = LinearLayoutManager(activity)
         recycler_movie_favorite.adapter = movieAdapter
     }
@@ -54,10 +51,11 @@ class MovieFavoriteFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> 
     override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor?) {
         GlobalScope.launch(Dispatchers.Main) {
             if (data != null) {
-                movieAdapter.setData(convertToMovieFavorite(data) as ArrayList<ResultMovie>)
+                movieAdapter.setData(convertToMovieFavorite(data))
                 movieAdapter.setOnItemClickCallback(object : MovieAdapter.OnItemClickCallback {
                     override fun onItemClicked(data: ResultMovie) {
                         val intent = Intent(activity, DetailActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
                         intent.putExtra(DetailActivity.EXTRA_MOVIE, data)
                         startActivity(intent)
                     }
@@ -67,7 +65,7 @@ class MovieFavoriteFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> 
     }
 
     override fun onLoaderReset(loader: Loader<Cursor>) {
-        movieAdapter.setData(null)
+        movieAdapter.setData()
     }
 
     override fun onResume() {

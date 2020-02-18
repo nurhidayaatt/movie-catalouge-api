@@ -52,9 +52,9 @@ class FavoriteWidget : AppWidgetProvider() {
                 val viewIndex = intent.getIntExtra(EXTRA_ITEM, 0)
                 Toast.makeText(context, "Touched view $viewIndex", Toast.LENGTH_SHORT).show()
             }else if (intent.action == UPDATE_WIDGET) {
-                val gm = AppWidgetManager.getInstance(context)
-                val ids = gm.getAppWidgetIds(ComponentName(context, FavoriteWidget::class.java))
-                gm.notifyAppWidgetViewDataChanged(ids, R.id.stack_view)
+                val appWidgetManager = AppWidgetManager.getInstance(context)
+                val appWidgetIds = appWidgetManager.getAppWidgetIds(ComponentName(context, FavoriteWidget::class.java))
+                appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.stack_view)
             }
         }
     }

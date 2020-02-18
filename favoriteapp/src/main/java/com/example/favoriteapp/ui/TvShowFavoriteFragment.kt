@@ -14,7 +14,6 @@ import androidx.loader.content.CursorLoader
 import androidx.loader.content.Loader
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.favoriteapp.util.CursorHelper.convertToTvFavorite
-
 import com.example.favoriteapp.R
 import com.example.favoriteapp.model.ResultTv
 import com.example.favoriteapp.adapter.TvAdapter
@@ -39,10 +38,8 @@ class TvShowFavoriteFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         LoaderManager.getInstance(this).initLoader(1, null, this)
         tvAdapter = TvAdapter()
-        tvAdapter.notifyDataSetChanged()
         recycler_tv_favorite.layoutManager = LinearLayoutManager(activity)
         recycler_tv_favorite.adapter = tvAdapter
     }
@@ -54,10 +51,11 @@ class TvShowFavoriteFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor>
     override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor?) {
         GlobalScope.launch(Dispatchers.Main) {
             if (data != null) {
-                tvAdapter.setData(convertToTvFavorite(data) as ArrayList<ResultTv>)
+                tvAdapter.setData(convertToTvFavorite(data))
                 tvAdapter.setOnItemClickCallback(object : TvAdapter.OnItemClickCallback {
                     override fun onItemClicked(data: ResultTv) {
                         val intent = Intent(activity, DetailActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
                         intent.putExtra(DetailActivity.EXTRA_TV, data)
                         startActivity(intent)
                     }
@@ -67,7 +65,7 @@ class TvShowFavoriteFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor>
     }
 
     override fun onLoaderReset(loader: Loader<Cursor>) {
-        tvAdapter.setData(null)
+        tvAdapter.setData()
     }
 
     override fun onResume() {

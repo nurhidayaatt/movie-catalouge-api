@@ -11,7 +11,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.moviecatalougeapi.R
 import com.example.moviecatalougeapi.data.adapter.MovieAdapter
@@ -38,7 +38,7 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var tvAdapter: TvAdapter
     private lateinit var viewModel: SearchViewModel
 
-    private var tes: String? = null
+    private var extra: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,8 +48,8 @@ class SearchActivity : AppCompatActivity() {
         setSupportActionBar(toolbar_search)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        tes = intent.getStringExtra(EXTRA)
-        viewModel = ViewModelProviders.of(this).get(SearchViewModel::class.java)
+        extra = intent.getStringExtra(EXTRA)
+        viewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
         initSpeakToText()
 
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
@@ -60,16 +60,16 @@ class SearchActivity : AppCompatActivity() {
                     closeKeyboard()
                     showLoading(true)
                     when {
-                        tes.equals(MOVIE) -> {
+                        extra.equals(MOVIE) -> {
                             getMovie(p0)
                         }
-                        tes.equals(TV) -> {
+                        extra.equals(TV) -> {
                             getTv(p0)
                         }
-                        tes.equals(MOVIE_FAVORITE) -> {
+                        extra.equals(MOVIE_FAVORITE) -> {
                             getFavoriteMovie(p0)
                         }
-                        tes.equals(TV_FAVORITE) -> {
+                        extra.equals(TV_FAVORITE) -> {
                             getFavoriteTv(p0)
                         }
                         else -> {
@@ -143,8 +143,6 @@ class SearchActivity : AppCompatActivity() {
 
     private fun showMovie() {
         movieAdapter = MovieAdapter()
-        movieAdapter.notifyDataSetChanged()
-
         recycler_search.layoutManager = LinearLayoutManager(this)
         recycler_search.adapter = movieAdapter
 
@@ -171,6 +169,7 @@ class SearchActivity : AppCompatActivity() {
         movieAdapter.setOnItemClickCallback(object : MovieAdapter.OnItemClickCallback {
             override fun onItemClicked(data: ResultMovie) {
                 val intent = Intent(this@SearchActivity, DetailActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
                 intent.putExtra(DetailActivity.EXTRA_MOVIE, data)
                 startActivity(intent)
             }
@@ -188,8 +187,6 @@ class SearchActivity : AppCompatActivity() {
 
     private fun showTv() {
         tvAdapter = TvAdapter()
-        tvAdapter.notifyDataSetChanged()
-
         recycler_search.layoutManager = LinearLayoutManager(this)
         recycler_search.adapter = tvAdapter
 
@@ -224,16 +221,13 @@ class SearchActivity : AppCompatActivity() {
 
     private fun getFavoriteMovie(search: String) {
         viewModel.getMovieFavorite(search)
-
         movieAdapter = MovieAdapter()
-        movieAdapter.notifyDataSetChanged()
-
         recycler_search.layoutManager = LinearLayoutManager(this)
         recycler_search.adapter = movieAdapter
 
         viewModel.favoriteMovie.observe(this, Observer { movieFavorite ->
             if (movieFavorite.isNotEmpty()) {
-                movieAdapter.setData(movieFavorite as ArrayList<ResultMovie>)
+                movieAdapter.setData(movieFavorite)
                 error.text = null
                 showLoading(false)
             }else {
@@ -254,10 +248,7 @@ class SearchActivity : AppCompatActivity() {
 
     private fun getFavoriteTv(search: String) {
         viewModel.getTvFavorite(search)
-
         tvAdapter = TvAdapter()
-        tvAdapter.notifyDataSetChanged()
-
         recycler_search.layoutManager = LinearLayoutManager(this)
         recycler_search.adapter = tvAdapter
 

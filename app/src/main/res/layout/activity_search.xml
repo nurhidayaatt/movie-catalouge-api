@@ -23,7 +23,7 @@
                 android:layout_height="40dp"
                 android:gravity="center_vertical"
                 android:layout_marginEnd="20dp"
-                android:background="@android:color/white"
+                app:cardBackgroundColor="@android:color/white"
                 app:cardCornerRadius="2dp"
                 android:id="@+id/cv">
 
@@ -71,10 +71,11 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_search"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         tools:listitem="@layout/item_layout_list"
         android:scrollbars="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/search_bar"/>
+        app:layout_constraintTop_toBottomOf="@+id/search_bar"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <ProgressBar
         android:id="@+id/progressBar"

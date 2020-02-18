@@ -1,12 +1,17 @@
 package com.example.moviecatalougeapi.ui.movie
 
+import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.moviecatalougeapi.BuildConfig
-import com.example.moviecatalougeapi.data.api.ApiService
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
+import com.example.moviecatalougeapi.data.api.ApiClient
 import com.example.moviecatalougeapi.data.model.movie.MovieList
 import com.example.moviecatalougeapi.data.model.movie.ResultMovie
+import com.example.moviecatalougeapi.data.repository.MovieDataSource
+import com.example.moviecatalougeapi.data.repository.MovieDataSourceFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -31,7 +36,7 @@ class MovieViewModel : ViewModel() {
 
         scope.launch {
             try {
-                val result: MovieList = ApiService.retrofitService.getMovie(BuildConfig.TMDB_API_KEY, language)
+                val result: MovieList = ApiClient.getClient().getMovie(language)
 
                 if (result.resultMovies.isNotEmpty()) {
                     _listMovie.value = result
